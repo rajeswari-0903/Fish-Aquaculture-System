@@ -1,0 +1,199 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.8), rgba(52, 152, 219, 0.8)), 
+                url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0') no-repeat center center fixed;
+    background-size: cover;
+    color: #ecf0f1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    animation: fadeIn 1s ease-in-out;
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #ecf0f1;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(0, 184, 148, 0.8);
+    animation: glowText 2s infinite alternate;
+    background: rgba(26, 60, 52, 0.8);
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), inset -5px -5px 10px rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+    transition: all 0.5s ease;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #ecf0f1;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.option i {
+    font-size: 1.8rem;
+    margin-right: 15px;
+    color: #00b894;
+    transition: transform 0.4s ease;
+}
+
+.option:hover {
+    background: linear-gradient(135deg, #00b894, #0984e3);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.5);
+}
+
+.option:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: #ffffff;
+}
+
+#loading {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #00b894;
+    margin: 20px 0;
+    text-shadow: 0 0 15px rgba(0, 184, 148, 0.7);
+    display: none;
+}
+
+#loading::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00b894, #0984e3);
+    animation: loadingBar 2s infinite;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+#sensor-data ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sensor-data ul li {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+#sensor-data ul li:hover {
+    transform: translateX(10px);
+    background: rgba(0, 184, 148, 0.25);
+}
+
+#prediction {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #0984e3;
+    font-weight: 800;
+    text-shadow: 0 0 15px rgba(9, 132, 227, 0.7);
+}
+
+.back-button {
+    display: none;
+    margin: 20px auto 0;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #00b894, #0984e3);
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 184, 148, 0.4);
+    transition: all 0.4s ease;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #0984e3, #00b894);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(9, 132, 227, 0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowText {
+    0% { text-shadow: 0 0 10px rgba(0, 184, 148, 0.5), 0 0 20px rgba(9, 132, 227, 0.3); }
+    100% { text-shadow: 0 0 20px rgba(0, 184, 148, 0.8), 0 0 30px rgba(9, 132, 227, 0.6); }
+}
+
+@keyframes loadingBar {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+}

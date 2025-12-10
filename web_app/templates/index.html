@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐟 Aquaculture Monitoring System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <h1>🐟 Aquaculture Monitoring System</h1>
+        <div class="card" id="prediction-choice">
+            <h2>Start Monitoring</h2>
+            <div class="option" data-type="start"><i class="fas fa-play"></i> Begin Live Monitoring</div>
+        </div>
+        <div id="loading">Fetching Live Data...</div>
+        <div class="card hidden" id="results">
+            <div id="sensor-data" class="hidden">
+                <h2>Live Sensor Data:</h2>
+                <ul id="sensor-data-list"></ul>
+            </div>
+            <div id="prediction-output" class="hidden">
+                <h2 id="prediction"></h2>
+            </div>
+            <button class="back-button" id="back-button"><i class="fas fa-arrow-left"></i> Stop Monitoring</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1 } },
+                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { grab: { distance: 200, line_linked: { opacity: 0.5 } }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        const startOption = document.querySelector('#prediction-choice .option');
+        const choiceCard = document.getElementById('prediction-choice');
+        const resultsCard = document.getElementById('results');
+        const backButton = document.getElementById('back-button');
+        const loading = document.getElementById('loading');
+        const sensorDataSection = document.getElementById('sensor-data');
+        const predictionOutputSection = document.getElementById('prediction-output');
+        let intervalId = null;
+
+        startOption.addEventListener('click', () => {
+            choiceCard.classList.add('hidden');
+            resultsCard.classList.remove('hidden');
+            backButton.style.display = 'block';
+            if (intervalId) clearInterval(intervalId);
+            fetchAquacultureData();
+            intervalId = setInterval(fetchAquacultureData, 15000);
+        });
+
+        backButton.addEventListener('click', () => {
+            clearInterval(intervalId);
+            choiceCard.classList.remove('hidden');
+            resultsCard.classList.add('hidden');
+            backButton.style.display = 'none';
+            sensorDataSection.classList.add('hidden');
+            predictionOutputSection.classList.add('hidden');
+        });
+
+        async function fetchAquacultureData() {
+            loading.style.display = 'block';
+            try {
+                const response = await fetch('http://127.0.0.1:5000/aquaculture-live-data');
+                if (!response.ok) throw new Error("Failed to fetch data from server");
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                displaySensorData(data.sensor_data);
+                displayPrediction(data.predicted_status);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('prediction').innerText = `Error: ${error.message}`;
+                predictionOutputSection.classList.remove('hidden');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displaySensorData(sensorData) {
+            const sensorList = document.getElementById('sensor-data-list');
+            sensorList.innerHTML = '';
+            const iconMap = {
+                'Air Quality (MQ-135, ppm)': 'fas fa-smog',
+                'Temp (AHT11, °C)': 'fas fa-thermometer-half',
+                'Humidity (AHT11, %)': 'fas fa-tint',
+                'Turbidity': 'fas fa-water',
+                'TDS': 'fas fa-leaf',
+                'pH': 'fas fa-vial'
+            };
+            for (const [key, value] of Object.entries(sensorData)) {
+                const li = document.createElement('li');
+                const iconClass = iconMap[key] || 'fas fa-info-circle';
+                li.innerHTML = `<i class="${iconClass}" style="margin-right: 10px; color: #00b894;"></i> ${key}: ${value}`;
+                sensorList.appendChild(li);
+            }
+            sensorDataSection.classList.remove('hidden');
+        }
+
+        function displayPrediction(prediction) {
+            document.getElementById('prediction').innerText = `Predicted Status: ${prediction}`;
+            predictionOutputSection.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
