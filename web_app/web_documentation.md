@@ -20,11 +20,9 @@ web_app/
 ├── static/
 │   └── styles.css
 │
-├── api/
-│   └── api_routes.md
-│
 └── dashboard_screenshots/
-    └── webpage_preview.png
+    |── non optimal results.png
+    └── optimal results.png
 ```
 
 ---
@@ -34,9 +32,8 @@ web_app/
 This is the core Flask backend responsible for:
 
 ### ✔ Receiving sensor data  
-Endpoint: **POST /data**
 
-The ESP32 (or Postman for testing) sends:
+The ESP32 sends:
 
 - air_quality  
 - temperature  
@@ -67,8 +64,7 @@ latest_data = {
 ### ✔ Updating prediction using the ML model  
 `app.py` loads:
 
-- `aquaculture_model.pkl`  
-- `label_encoder.pkl`  
+- `random_forest_model.joblib`
 
 from:
 
@@ -82,64 +78,8 @@ Then calls a helper:
 predict_status(...)
 ```
 
-### ✔ Displaying results on a webpage  
-Rendered at route:
 
-```
-GET /
-```
-
-This loads `templates/index.html` and displays the live data.
-
----
-
-## 🧪 3. API Endpoints
-
-### 🔹 **POST /data**
-Used by ESP32 to send readings.
-
-Example form data:
-
-```
-air_quality=120
-temperature=29
-turbidity=40
-tds=250
-ph=7.1
-nh3=0.5
-do=6.0
-```
-
-Response JSON:
-
-```json
-{
-  "status": "ok",
-  "prediction": "Optimal"
-}
-```
-
-### 🔹 **GET /latest_data**
-Used by AJAX or Node-RED to fetch the latest sensor values.
-
-Response:
-
-```json
-{
-  "air_quality": ...,
-  "temperature": ...,
-  "turbidity": ...,
-  "tds": ...,
-  "ph": ...,
-  "nh3": ...,
-  "do": ...,
-  "prediction": "Optimal"
-}
-```
-
----
-
-## 🖥 4. Frontend Files
+## 🖥 3. Frontend Files
 
 ### 📄 `templates/index.html`
 
@@ -167,7 +107,7 @@ You may customize it to match your theme.
 
 ---
 
-## 🔧 5. Running the Web App
+## 🔧 4. Running the Web App
 
 ### Step 1 — Install requirements
 
@@ -193,7 +133,7 @@ or on your Wi-Fi network:
 http://<your-ip>:5000/
 ```
 
-### Step 4 — Test with Postman or ESP32
+### Step 4 — Test with ESP32
 
 Send POST data to:
 
@@ -233,8 +173,7 @@ The web module completes the project by allowing **real-time monitoring** and **
 It communicates seamlessly with:
 
 - Hardware (ESP32)
-- ML Module (.pkl model + encoder)
-- Node-RED Dashboard (optional)
+- ML Module (.joblib model + encoder)
 
 This makes the system ready for **academic submission**, **demonstrations**, and **future expansion**.
 
