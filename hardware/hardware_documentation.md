@@ -47,7 +47,7 @@ hardware/
    - 🧪 pH Sensor → Measures acidity  
    - 🌫 Turbidity Sensor → Measures water clarity  
    - 💧 TDS Sensor → Measures dissolved salts  
-   - 🌡 DHT11/DHT22 → Temperature & humidity  
+   - 🌡 Temperature Sensor → Temperature 
    - 🏭 MQ135 → Air quality sensor  
 
 3. **Supporting Items**  
@@ -64,7 +64,7 @@ See `/hardware/components/components_list.md` for the full list.
 
 | Sensor | ESP32 Pin | Power | Notes |
 |--------|-----------|--------|-------|
-| DHT11 | GPIO 4 | 3.3V | Temperature & Humidity |
+| Temperature | GPIO 4 | 3.3V | Temperature |
 | pH Sensor | GPIO 34 | 3.3V/5V | Analog input only |
 | Turbidity Sensor | GPIO 35 | 5V | Better accuracy at 5V |
 | TDS Sensor | GPIO 32 | 3.3V | Must isolate from noise |
