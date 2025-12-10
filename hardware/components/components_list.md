@@ -1,7 +1,7 @@
 # Components List
 
 1. ESP32 Development Board  
-2. DHT11 Temperature & Humidity Sensor  
+2. Temperature Sensor  
 3. pH Sensor Module  
 4. Turbidity Sensor  
 5. TDS Sensor  
