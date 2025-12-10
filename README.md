@@ -13,7 +13,8 @@ The system measures:
 - TDS (Total Dissolved Salts)  
 - Air Quality (MQ-135)  
 - Temperature  
-- Humidity  
+- Ammonia
+- Dissolved Oxygen  
 
 If values go out of safe range, the system shows **Non-Optimal** so that farmers can take action. :contentReference[oaicite:1]{index=1}  
 
@@ -28,7 +29,7 @@ If values go out of safe range, the system shows **Non-Optimal** so that farmers
 
 2. `ml/train_model.py`  
    - Trains a simple Logistic Regression ML model  
-   - Saves `logistic_regression_model.pkl` and `scaler.pkl`
+   - Saves `random_forest_model.joblib`
 
 3. `ml/predict.py`  
    - Loads the model  
@@ -44,10 +45,3 @@ If values go out of safe range, the system shows **Non-Optimal** so that farmers
    - Simple dashboard page to display values and prediction
 
 ---
-
-## ▶️ How to Run (Short Version)
-
-1. Train the ML model  
-   ```bash
-   cd ml
-   python train_model.py
