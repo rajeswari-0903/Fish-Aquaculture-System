@@ -26,9 +26,6 @@ machine_learning/
 │   ├── train_model_realdata.py
 │   └── predict_rf.py
 │
-├── notebooks/
-│   └── model_development.ipynb      (optional)
-│
 ├── ml_results/
 │   ├── confusion_matrix.png         (optional)
 │   └── accuracy_plot.png            (optional)
@@ -105,7 +102,7 @@ cd machine_learning/scripts
 python train_model_realdata.py
 ```
 
-After running, you should see:
+After running, we see:
 
 - Printed accuracy and metrics
 - Updated `random_forest_model.joblib` in `../models/`
@@ -154,26 +151,7 @@ In the Flask backend (`web_app/app.py`):
 
 ---
 
-## 🔄 7. How to Retrain with a New Dataset
-
-If you collect new or larger datasets:
-
-1. Replace or add your new CSV file in:
-   ```text
-   machine_learning/dataset/
-   ```
-2. Update `train_model_realdata.py` to point to your new file name.
-3. Run:
-   ```bash
-   cd machine_learning/scripts
-   python train_model_realdata.py
-   ```
-4. A new `random_forest_model.joblib` will be created.
-5. Restart the Flask app so it uses the updated model.
-
----
-
-## ✅ 8. Summary
+## ✅ 7. Summary
 
 - The **ML module** transforms raw sensor readings into a clear decision:
   - **Optimal vs Non-Optimal aquaculture environment**
